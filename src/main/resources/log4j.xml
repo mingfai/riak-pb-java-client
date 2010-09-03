@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+  <appender name="RIAK" class="org.apache.log4j.DailyRollingFileAppender">
+    <errorHandler class="org.apache.log4j.helpers.OnlyOnceErrorHandler"/>
+    <param name="File" value="logs/riak.log"/>
+    <param name="Append" value="false"/>
+    <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d %-5p [%-30.40c{1}] %X{tid} %X{sid} %X{uid} %m%n"/>
+    </layout>
+  </appender>
+
+  <appender name="NETTY" class="org.apache.log4j.DailyRollingFileAppender">
+    <errorHandler class="org.apache.log4j.helpers.OnlyOnceErrorHandler"/>
+    <param name="File" value="logs/netty.log"/>
+    <param name="Append" value="false"/>
+    <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d %-5p [%-30.40c{1}] %X{tid} %X{sid} %X{uid} %m%n"/>
+    </layout>
+  </appender>
+
+  <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+    <errorHandler class="org.apache.log4j.helpers.OnlyOnceErrorHandler"/>
+    <param name="Target" value="System.out"/>
+    <!-- <param name="Threshold" value="INFO" /> -->
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}] %m%n"/>
+    </layout>
+  </appender>
+
+
+  <category name="org.jboss.netty" additivity="false">
+    <priority value="TRACE"/>
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="NETTY"/>
+  </category>
+
+  <category name="com.basho.riak" additivity="false">
+    <priority value="TRACE"/>
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="RIAK"/>
+  </category>
+
+  <root>
+    <priority value="INFO"/>
+    <appender-ref ref="CONSOLE"/>
+  </root>
+
+</log4j:configuration>

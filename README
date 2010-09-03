@@ -1,0 +1,22 @@
+This is an archived project and I'm not going to further develop this. Whoever found it by chance may use it as a
+reference to develop a Riak ProtoBuff Java client with JBoss Netty.
+
+I've implemented ping, list buckets and list keys. With the framework, it is actually not hard to implement the other
+interfaces.
+
+
+The following are some difference of my approach in compare to Krestenkrab's riak-java-pb-client are:
+
+1. use Netty NIO
+    - Krestenkrak's implementation uses a custom synchronous socket connection per thread (using threadlocal).
+    
+2. changed client interface
+    - considered both Java and Groovy API usage
+    - native Java, it shall not expose Netty or ProtoBuf interface
+    - e.g. for list buckets, in Krestenkrak's implementation, the signature is:
+           public ByteString[] listBuckets() throws IOException
+
+           I personally think returning a Google ProtoBuf ByteString isn't a good idea.
+
+The reason I stop the development is that I've decided not to use Riak. Riak is indeed among the best NoSQL product. It
+ ranked the first in my evaluation but unfortunately I have decided to use a Java-based solution.
